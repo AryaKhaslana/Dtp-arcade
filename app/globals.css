@@ -1,6 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-clay-pink: #FFB4C6;
+  --color-clay-pink-soft: #FFD6E0;
+  --color-clay-mint: #A8E6C9;
+  --color-clay-mint-soft: #D3F5E3;
+  --color-clay-sky: #A0D8F1;
+  --color-clay-sky-soft: #CFEEFB;
+  --color-clay-butter: #FFE39A;
+  --color-clay-butter-soft: #FFF3C9;
+  --color-clay-lavender: #D4C1F9;
+  --color-clay-glass: #F7F5FB;
+  --color-clay-base: #EDEBF5;
+  --color-clay-ink: #3A3550;
+
+  /* Box Shadows (Empuk 3D) */
+  --shadow-clay: 8px 8px 16px rgba(163, 155, 190, 0.35), -8px -8px 16px rgba(255, 255, 255, 0.85), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+  --shadow-clay-btn: 6px 6px 12px rgba(163, 155, 190, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.9), inset 2px 2px 3px rgba(255, 255, 255, 0.6);
+  --shadow-clay-pressed: inset 6px 6px 12px rgba(163, 155, 190, 0.4), inset -6px -6px 12px rgba(255, 255, 255, 0.7);
+  --shadow-clay-lg: 14px 14px 28px rgba(163, 155, 190, 0.3), -14px -14px 28px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(255, 255, 255, 0.5);
+  --shadow-clay-sm: 4px 4px 8px rgba(163, 155, 190, 0.35), -4px -4px 8px rgba(255, 255, 255, 0.85);
+
+  /* Border Radius */
+  --radius-clay: 1.75rem;
+  --radius-clay-lg: 2.5rem;
+}
 
 @layer base {
   body {
