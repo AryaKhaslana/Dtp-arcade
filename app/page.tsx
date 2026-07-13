@@ -1,65 +1,125 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+
+const cardVariants = {
+  rest: { y: 0, rotate: 0 },
+  hover: {
+    y: -12,
+    rotate: -1,
+    transition: { type: "spring", stiffness: 300, damping: 15 },
+  },
+  tap: {
+    y: 4,
+    scale: 0.96,
+    rotate: 0,
+    transition: { type: "spring", stiffness: 400, damping: 20 },
+  },
+};
+
+const floatVariants = {
+  animate: {
+    y: [0, -10, 0],
+    transition: {
+      duration: 3.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-16 overflow-hidden">
+      {/* Floating title */}
+      <motion.div
+        variants={floatVariants}
+        animate="animate"
+        className="text-center mb-16"
+      >
+        <div className="inline-block clay-surface px-8 py-4 rounded-clay-lg mb-4">
+          <span className="text-sm font-medium tracking-widest text-clay-ink/60 uppercase">
+            DTP Programmer Presents
+          </span>
+        </div>
+        <h1 className="text-5xl md:text-7xl font-extrabold text-clay-ink drop-shadow-sm">
+          Welcome to{" "}
+          <span className="relative inline-block">
+            The Arcade
+            <span className="absolute -top-2 -right-8 text-3xl rotate-12">✨</span>
+          </span>
+        </h1>
+        <p className="mt-4 text-clay-ink/60 text-lg">
+          Pilih pengalaman, terus rasain sendiri serunya
+        </p>
+      </motion.div>
+
+      {/* Cards */}
+      <div className="flex flex-col md:flex-row gap-8 md:gap-10 w-full max-w-4xl justify-center items-stretch">
+        {/* Card A - Live Face Filter */}
+        <motion.button
+          variants={cardVariants}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          className="group relative flex-1 rounded-clay-lg p-10 flex flex-col items-center justify-center gap-4 min-h-[280px] cursor-pointer select-none active:shadow-clay-pressed"
+          style={{ backgroundColor: "#CFEEFB" }}
+        >
+          <motion.div
+            className="text-7xl"
+            variants={{
+              rest: { scale: 1, rotate: 0 },
+              hover: { scale: 1.15, rotate: [0, -8, 8, 0] },
+            }}
+            transition={{ duration: 0.6 }}
+          >
+            🎭
+          </motion.div>
+          <h2 className="text-2xl font-bold text-clay-ink text-center">
+            Live Face Filter
+          </h2>
+          <p className="text-clay-ink/60 text-center text-sm">
+            Liat muka lo berubah lucu, real-time!
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <span className="mt-2 clay-button inline-block px-6 py-2 text-sm font-semibold text-clay-ink bg-white/60 rounded-clay">
+            Coba Sekarang →
+          </span>
+        </motion.button>
+
+        {/* Card B - AI Prediksi Lo */}
+        <motion.button
+          variants={cardVariants}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          className="group relative flex-1 rounded-clay-lg p-10 flex flex-col items-center justify-center gap-4 min-h-[280px] cursor-pointer select-none active:shadow-clay-pressed"
+          style={{ backgroundColor: "#FFD6E0" }}
+        >
+          <motion.div
+            className="text-7xl"
+            variants={{
+              rest: { scale: 1, rotate: 0 },
+              hover: { scale: 1.15, rotate: [0, -8, 8, 0] },
+            }}
+            transition={{ duration: 0.6 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            🔮
+          </motion.div>
+          <h2 className="text-2xl font-bold text-clay-ink text-center">
+            AI Prediksi Lo
+          </h2>
+          <p className="text-clay-ink/60 text-center text-sm">
+            Biar AI tebak siapa diri lo sebenernya
+          </p>
+          <span className="mt-2 clay-button inline-block px-6 py-2 text-sm font-semibold text-clay-ink bg-white/60 rounded-clay">
+            Ramal Sekarang →
+          </span>
+        </motion.button>
+      </div>
+
+      {/* Ambient decorative blobs */}
+      <div className="fixed -z-10 top-20 left-10 w-40 h-40 rounded-full bg-clay-mint-soft/50 blur-3xl" />
+      <div className="fixed -z-10 bottom-20 right-10 w-52 h-52 rounded-full bg-clay-pink-soft/50 blur-3xl" />
+    </main>
   );
 }
