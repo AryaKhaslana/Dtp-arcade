@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// IMPORT KOMPONEN SAKTI KITA DI SINI
+// Pastikan path-nya bener (sesuaikan kalo lu naruh di folder beda)
+import PassportModal from "@/components/PassportModal";
+import KonamiCode from "../components/KonamiCode";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +32,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Render komponen melayang di seluruh halaman */}
+        <KonamiCode />
+        <PassportModal />
+        
+        {/* Konten halaman utama lu */}
+        {children}
+      </body>
     </html>
   );
 }
