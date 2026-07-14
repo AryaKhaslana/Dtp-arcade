@@ -57,6 +57,7 @@ export default function PredictPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Gagal generate");
       setResult(data);
+      localStorage.setItem("stamp_predict", "true");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Ada yang salah nih");
     } finally {

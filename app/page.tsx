@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useRef, useEffect } from "react";
+import ConfettiLayer, { ConfettiHandle } from "@/components/ConfettiLayer";
+import { unlockAudio, playHover } from "@/lib/sound";
 
 const cardVariants = {
   rest: { y: 0, rotate: 0 },
@@ -43,6 +46,7 @@ const experiences: Experience[] = [
     emoji: "🔮",
     color: "var(--color-clay-pink-soft)",
     href: "/predict",
+    badge: "BARU!",
     rotate: 1.5,
   },
   {
@@ -55,13 +59,20 @@ const experiences: Experience[] = [
     rotate: -1,
   },
   {
-    title: "Snake Reborn",
-    desc: "Classic snake, versi anak DTP. Dibikin sama Fatih!",
-    emoji: "🐍",
+    title: "Scream Game",
+    desc: "Teriak sekuat tenaga dan liat seberapa gede power lu!",
+    emoji: "🤬",
+    color: "var(--color-clay-butter-soft)",
+    href: "/scream",
+    rotate: 1,
+  },
+  {
+    title: "Typing Game with theme zombie",
+    desc: "Typing game, versi anak DTP. Dibikin sama Fatih!",
+    emoji: "⌨️",
     color: "var(--color-clay-butter-soft)",
     href: "https://snake-fatih.vercel.app",
     external: true,
-    badge: "BY FATIH",
     credit: "🔗 Dibuka di tab baru",
     rotate: 1,
   },
@@ -128,18 +139,30 @@ function Sticker({ text, rotate = 8 }: { text: string; rotate?: number }) {
 
 export default function Home() {
   const router = useRouter();
+  const confettiRef = useRef<ConfettiHandle>(null);
 
-  const handleNavigate = (exp: Experience) => {
-    if (exp.external) {
-      window.open(exp.href, "_blank", "noopener,noreferrer");
-      return;
-    }
-    setTimeout(() => router.push(exp.href), 300);
+  useEffect(() => {
+  const unlock = () => {
+    unlockAudio();
+    window.removeEventListener("pointerdown", unlock);
   };
+  window.addEventListener("pointerdown", unlock);
+  return () => window.removeEventListener("pointerdown", unlock);
+}, []);
+
+  const handleNavigate = (exp: Experience, e: React.MouseEvent) => {
+  confettiRef.current?.burst(e.clientX, e.clientY);
+  if (exp.external) {
+    setTimeout(() => window.open(exp.href, "_blank", "noopener,noreferrer"), 150);
+    return;
+  }
+  setTimeout(() => router.push(exp.href), 300);
+};
 
   return (
     <main className="relative min-h-screen flex flex-col items-center overflow-x-hidden text-clay-ink">
-
+       <ConfettiLayer ref={confettiRef} />
+       
       {/* --- BACKGROUND DECORATIONS --- */}
       <motion.div variants={floatingDeco(5, 0)} animate="animate" className="absolute top-24 left-10 md:left-32 text-6xl opacity-40 blur-[2px] select-none -z-10">🎮</motion.div>
       <motion.div variants={floatingDeco(6, 1)} animate="animate" className="absolute top-40 right-10 md:right-32 text-5xl opacity-30 blur-[1px] select-none -z-10">👾</motion.div>
@@ -189,7 +212,8 @@ export default function Home() {
           {experiences.map((exp) => (
             <motion.button
               key={exp.title}
-              onClick={() => handleNavigate(exp)}
+              onClick={(e) => handleNavigate(exp, e)}
+              onHoverStart={() => playHover()}
               variants={cardVariants}
               initial="rest"
               whileHover="hover"

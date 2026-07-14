@@ -187,6 +187,7 @@ export default function FilterPage() {
 
     const dataUrl = composite.toDataURL("image/png");
     setSnapshotUrl(dataUrl);
+    localStorage.setItem("stamp_filter", "true");
   }, []);
 
   const downloadSnapshot = () => {
