@@ -308,6 +308,7 @@ export default function NoseGamePage() {
     let raf: number;
 
     const read = () => {
+      // @ts-ignore: Fix beda versi tipe ArrayBuffer di Vercel
       analyser.getByteTimeDomainData(data);
       let sumSquares = 0;
       for (let i = 0; i < data.length; i++) {
