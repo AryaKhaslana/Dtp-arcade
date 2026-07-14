@@ -14,8 +14,11 @@ const cardVariants = {
 
 const floatingDeco = (duration: number, delay: number) => ({
   animate: {
-    y: [0, -20, 0], x: [0, 10, 0], rotate: [0, 10, -10, 0],
-    transition: { duration, delay, repeat: Infinity, ease: "easeInOut" },
+    y: [0, -20, 0], 
+    x: [0, 10, 0], 
+    rotate: [0, 10, -10, 0],
+    // FIX-NYA DI SINI: Tambahin 'as const' di ujung ease
+    transition: { duration, delay, repeat: Infinity, ease: "easeInOut" as const },
   },
 });
 
