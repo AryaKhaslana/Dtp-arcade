@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 60; 
+
 export async function POST(req: NextRequest) {
   try {
     const { name, answers } = await req.json();
@@ -11,88 +13,84 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const systemPrompt = `Kamu adalah AI generator karakter RPG bergaya Gen-Z Indonesia yang lucu dan witty.
-Tugasmu: berdasarkan jawaban user, buat karakter RPG fiktif yang nyambung sama jawabannya (jangan generic).
-
-Gaya bahasa: santai, gaul, sedikit alay, banyak referensi meme/anak IT (bug, deadline, kopi, dll), TAPI tetap sopan dan aman untuk acara sekolah.
-
-PENTING: Balas HANYA dalam format JSON valid, tanpa markdown code block, tanpa teks tambahan apapun. Struktur:
-{
-  "title": "gelar/kelas karakter yang lucu, max 5 kata",
-  "class": "nama class RPG yang catchy, max 3 kata",
-  "stats": {
-    "power": <angka 1-100>,
-    "wisdom": <angka 1-100>,
-    "chaos": <angka 1-100>,
-    "vibes": <angka 1-100>
-  },
-  "special_skill": "nama jurus/skill unik yang nyambung ke jawaban user, max 6 kata",
-  "roast": "satu kalimat roasting/prediksi lucu tentang kepribadian user, max 20 kata, nyambung ke jawaban mereka"
-}`;
-
-    const userPrompt = `Nama: ${name}
-Senjata andalan: ${answers[0]}
-Tempat nongkrong: ${answers[1]}
-Kalo ketemu bug: ${answers[2]}
-
-Generate karakter RPG-nya sekarang.`;
+    // --- DATA CADANGAN SAKTI ---
+    // Kalau Gemini error kena limit, kita lempar data ini diem-diem
+    const mockResult = {
+      title: "Sepuh " + answers[1].split(" ")[0], 
+      class: "Glitch Master",
+      stats: {
+        power: Math.floor(Math.random() * 40) + 60, // Biar angkanya tetep random tipis-tipis
+        wisdom: 15,
+        chaos: 99,
+        vibes: 100
+      },
+      special_skill: "Turu pas ngerjain project",
+      roast: `Percuma senjata lu ${answers[0]}, kalo nemu bug kelakuan lu ujung-ujungnya tetep ${answers[2].toLowerCase()}, kocak lu ${name}!`
+    };
 
     const apiKey = process.env.GEMINI_API_KEY;
+    
+    // Kalau API Key belum dipasang di .env, langsung pake cadangan
     if (!apiKey) {
-      return NextResponse.json(
-        { error: "Server belum dikonfigurasi, hubungi panitia" },
-        { status: 500 }
-      );
+      console.log("API Key kosong, pakai data cadangan.");
+      await new Promise(r => setTimeout(r, 1500)); // Kasih delay dikit biar animasi loading tetep jalan
+      return NextResponse.json(mockResult);
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.9,
-            responseMimeType: "application/json",
-          },
-        }),
+    const systemPrompt = `Kamu adalah AI generator karakter RPG bergaya Gen-Z Indonesia yang lucu dan witty.
+Tugasmu: berdasarkan jawaban user, buat karakter RPG fiktif yang nyambung sama jawabannya.
+Gaya bahasa: santai, gaul, sedikit alay, banyak referensi anak SMK IT/Programming.
+PENTING: Balas HANYA dalam format JSON valid. Struktur:
+{
+  "title": "gelar lucu, max 5 kata",
+  "class": "nama class, max 3 kata",
+  "stats": { "power": 1-100, "wisdom": 1-100, "chaos": 1-100, "vibes": 1-100 },
+  "special_skill": "skill unik, max 6 kata",
+  "roast": "roasting lucu max 20 kata"
+}`;
+
+    const userPrompt = `Nama: ${name}\nSenjata: ${answers[0]}\nNongkrong: ${answers[1]}\nKalo ada bug: ${answers[2]}`;
+
+    try {
+      // Nyoba nembak Gemini beneran
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
+            generationConfig: { temperature: 0.9, responseMimeType: "application/json" },
+          }),
+        }
+      );
+
+      // KALO GEMINI NGAMBEK KENA LIMIT (ERROR 429 atau lainnya)
+      if (!response.ok) {
+        console.warn(`Gemini Error ${response.status}. Pindah ke mode Data Cadangan!`);
+        return NextResponse.json(mockResult); // Mulus, user nggak nyadar
       }
-    );
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("Gemini API error:", errText);
-      return NextResponse.json(
-        { error: "AI lagi capek, coba lagi bentar ya" },
-        { status: 502 }
-      );
+      const data = await response.json();
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (!rawText) return NextResponse.json(mockResult);
+
+      const cleaned = rawText.replace(/```json|```/g, "").trim();
+      const result = JSON.parse(cleaned);
+
+      return NextResponse.json(result);
+
+    } catch (fetchError) {
+      // Kalau fetch gagal total (misal internet putus)
+      console.warn("Koneksi LLM putus, switch ke cadangan.");
+      return NextResponse.json(mockResult);
     }
 
-    const data = await response.json();
-    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!rawText) {
-      return NextResponse.json(
-        { error: "AI gak ngasih jawaban, coba lagi" },
-        { status: 502 }
-      );
-    }
-
-    // Safety parse - jaga-jaga kalau model tetep nyisipin markdown fence
-    const cleaned = rawText.replace(/```json|```/g, "").trim();
-    const result = JSON.parse(cleaned);
-
-    return NextResponse.json(result);
   } catch (err) {
-    console.error("Predict route error:", err);
+    console.error("Route error parah:", err);
     return NextResponse.json(
-      { error: "Ada yang error nih, coba lagi ya" },
+      { error: "Server lokal lagi pusing, coba lagi ya" },
       { status: 500 }
     );
   }
