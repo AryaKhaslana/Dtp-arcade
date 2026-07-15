@@ -79,6 +79,22 @@ const experiences: Experience[] = [
     credit: "🔗 Dibuka di tab baru",
     rotate: 1,
   },
+  {
+    title: "Smasher Bug",
+    desc: "Tes refleks lo! Klik bug sebelum dia kabur.",
+    emoji: " 🐛",
+    color: "var(--color-clay-sky)",
+    href: "/smasher",
+    rotate: -1.5,
+  },
+  {
+    title: "Memory Leak",
+    desc: "Tes ingatan lo! Ikutin urutan tombol yang nyala tanpa salah pencet.",
+    emoji: "🧠",
+    color: "var(--color-clay-sky)",
+    href: "/memory",
+    rotate: -1.5,
+  },
 ];
 
 function MarqueeLights() {
@@ -211,7 +227,7 @@ export default function Home() {
         </div>
 
         {/* Cards - data driven grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-4xl relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-5xl relative z-10">
           {experiences.map((exp) => (
             <motion.button
               key={exp.title}
