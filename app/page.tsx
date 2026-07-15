@@ -74,7 +74,7 @@ const experiences: Experience[] = [
     desc: "Typing game, versi anak DTP. Dibikin sama Fatih!",
     emoji: "⌨️",
     color: "var(--color-clay-butter-soft)",
-    href: "https://snake-fatih.vercel.app",
+    href: "https://zombie-typing.vercel.app/",
     external: true,
     credit: "🔗 Dibuka di tab baru",
     rotate: 1,
