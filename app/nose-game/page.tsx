@@ -622,7 +622,7 @@ export default function NoseGamePage() {
           )}
 
           <canvas ref={gameCanvasRef} className="w-full h-full" />
-          <video ref={videoRef} autoPlay playsInline muted className="hidden" />
+          <video ref={videoRef} autoPlay playsInline muted className="absolute opacity-0 w-0 h-0 pointer-events-none" />
         </div>
 
         {phase === "playing" && (

@@ -36,12 +36,13 @@ type Experience = {
 
 const experiences: Experience[] = [
   {
-    title: "Live Face Filter",
-    desc: "Liat muka lo berubah lucu pake AR, real-time!",
-    emoji: "🎭",
-    color: "var(--color-clay-sky-soft)",
-    href: "/filter",
-    rotate: -1.5,
+    title: "Hoppy Crossing",
+    desc: "Bantu kelinci nyebrang jalan tanpa ketabrak! (By Nabil dkk)",
+    emoji: "🐰",
+    colorFrom: "from-green-400", colorTo: "to-green-600", shadowColor: "bg-green-950", borderColor: "border-green-950",
+    href: "https://[LINK-VERCEL-NABIL-NANTI].vercel.app", // Masukin link vercel Nabil
+    external: true,
+    badge: "NEW EVENT",
   },
   {
     title: "AI Prediksi Lo",
