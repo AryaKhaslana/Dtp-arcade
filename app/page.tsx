@@ -96,6 +96,22 @@ const experiences: Experience[] = [
     href: "/memory",
     rotate: -1.5,
   },
+  {
+    title: "Ping Pong",
+    desc: "Mainkan game ini solo atau berdua dengan temanmu.",
+    emoji: "🏓",
+    color: "var(--color-clay-sky)",
+    href: "/pong-game",
+    rotate: -1.5,
+  },
+  {
+    title: "Critical Strike anime",
+    desc: "Like a hack and slash",
+    emoji: "⚔️",
+    color: "var(--color-butter-soft)",
+    href: "/space-game",
+    rotate: -1.5,
+  },
 ];
 
 function MarqueeLights() {
