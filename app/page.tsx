@@ -117,7 +117,7 @@ const experiences: Experience[] = [
     desc: "Menempatkan balok dengan tepat",
     emoji: "🎵",
     color: "var(--color-butter-soft)",
-    href: "/space-game",
+    href: "/rhythm-game",
     rotate: -1.5,
   },
 ];
