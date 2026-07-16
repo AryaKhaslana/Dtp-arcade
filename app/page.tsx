@@ -36,11 +36,11 @@ type Experience = {
 
 const experiences: Experience[] = [
   {
-    title: "Hoppy Crossing",
-    desc: "Bantu kelinci nyebrang jalan tanpa ketabrak! (By Nabil dkk)",
-    emoji: "🐰",
+    title: "Awas Ketabrak !",
+    desc: "Bantu Hero nyebrang jalan tanpa ketabrak! (By Nabil )",
+    emoji: "🚦",
     colorFrom: "from-green-400", colorTo: "to-green-600", shadowColor: "bg-green-950", borderColor: "border-green-950",
-    href: "https://[LINK-VERCEL-NABIL-NANTI].vercel.app", // Masukin link vercel Nabil
+    href: "https://mnabilsq-byte.github.io/Awas-Ketabrak--/", // Masukin link vercel Nabil
     external: true,
     badge: "NEW EVENT",
   },
@@ -108,6 +108,14 @@ const experiences: Experience[] = [
     title: "Critical Strike anime",
     desc: "Like a hack and slash",
     emoji: "⚔️",
+    color: "var(--color-butter-soft)",
+    href: "/space-game",
+    rotate: -1.5,
+  },
+  {
+    title: "Rhythm Game",
+    desc: "Menempatkan balok dengan tepat",
+    emoji: "🎵",
     color: "var(--color-butter-soft)",
     href: "/space-game",
     rotate: -1.5,
