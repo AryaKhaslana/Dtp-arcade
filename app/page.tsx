@@ -120,6 +120,16 @@ const experiences: Experience[] = [
     href: "/rhythm-game",
     rotate: -1.5,
   },
+  {
+    title: "Hole Eat !",
+    desc: "Hole eat pemakan segalanya, By nabil",
+    emoji: "🕳️",
+    color: "var(--color-clay-butter-soft)",
+    href: "https://mnabilsq-byte.github.io/Hole-eat/",
+    external: true,
+    credit: "🔗 Dibuka di tab baru",
+    rotate: 1,
+  },
 ];
 
 function MarqueeLights() {
