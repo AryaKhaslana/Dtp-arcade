@@ -54,12 +54,11 @@ const experiences: Experience[] = [
     rotate: 1.5,
   },
   {
-    title: "Nose Bird",
-    desc: "Naik turunin kepala lo buat gerakin burungnya!",
+    title: "Mad Bird",
+    desc: "Pilih Teriak atau spasi agar menantang",
     emoji: "🐤",
     color: "var(--color-clay-mint-soft)",
     href: "/nose-game",
-    badge: "BARU!",
     rotate: -1,
   },
   {
@@ -129,6 +128,14 @@ const experiences: Experience[] = [
     external: true,
     credit: "🔗 Dibuka di tab baru",
     rotate: 1,
+  },
+  {
+    title: "QTE - Boss",
+    desc: "Bunuh boss dengan combo yang memuaskan",
+    emoji: "⚔️",
+    color: "var(--color-butter-soft)",
+    href: "/qte-boss",
+    rotate: -1.5,
   },
 ];
 
