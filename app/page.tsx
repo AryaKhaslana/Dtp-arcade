@@ -45,15 +45,6 @@ const experiences: Experience[] = [
     badge: "NEW EVENT",
   },
   {
-    title: "AI Prediksi Lo",
-    desc: "Biar AI tebak siapa diri lo sebenernya & stats RPG lo!",
-    emoji: "🔮",
-    color: "var(--color-clay-pink-soft)",
-    href: "/predict",
-    badge: "BARU!",
-    rotate: 1.5,
-  },
-  {
     title: "Mad Bird",
     desc: "Pilih Teriak atau spasi agar menantang",
     emoji: "🐤",
@@ -135,6 +126,22 @@ const experiences: Experience[] = [
     emoji: "⚔️",
     color: "var(--color-butter-soft)",
     href: "/qte-boss",
+    rotate: -1.5,
+  },
+  {
+    title: "Slingshot bridge !",
+    desc: "Bangun jembatan dan bantu ragdoll",
+    emoji: "🪢",
+    color: "var(--color-butter-soft)",
+    href: "/slingshot-bridge",
+    rotate: -1.5,
+  },
+  {
+    title: "Sumo Push",
+    desc: "Main dorong dorongan",
+    emoji: "🤼‍♂️",
+    color: "var(--color-butter-soft)",
+    href: "/sumo-push",
     rotate: -1.5,
   },
 ];
